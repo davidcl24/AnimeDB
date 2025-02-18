@@ -46,6 +46,11 @@ class AnimesFragment : Fragment() {
             layoutManager = mLayoutManager
             adapter = mAdapter
         }
+
+        binding.btnSearch.setOnClickListener {
+            viewModel.searchAnimeByName(binding.editTextSearch.text.toString())
+        }
+
         viewModel.state.observe(viewLifecycleOwner) {state ->
             binding.progressBar.visibility = if (state.loading) View.VISIBLE else View.GONE
             mAdapter.listAnimes = state.list

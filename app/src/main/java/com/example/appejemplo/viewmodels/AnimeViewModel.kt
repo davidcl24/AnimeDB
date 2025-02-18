@@ -35,6 +35,24 @@ class AnimeViewModel : ViewModel() {
         }
     }
 
+    fun searchAnimeByName(name: String) {
+        viewModelScope.launch {
+            try {
+                val response = animesService.getAnimeByName(name)
+                _state.value = _state.value?.copy(
+                    list = response.animes,
+                    loading = false,
+                    error = null
+                )
+            } catch (e: Exception) {
+                _state.value = _state.value?.copy(
+                    loading = false,
+                    error = e.message
+                )
+            }
+        }
+    }
+
 
     data class UiState(
         val loading:Boolean = true,
