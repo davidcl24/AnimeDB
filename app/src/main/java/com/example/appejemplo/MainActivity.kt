@@ -10,6 +10,7 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.NavigationUI
+import androidx.navigation.ui.NavigationUI.setupWithNavController
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.example.appejemplo.databinding.ActivityMainBinding
 
@@ -31,6 +32,9 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(binding.materialToolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false);
         setupActionBarWithNavController(navController)
+
+        val bottomNavigation = binding.bottomNavigation
+        setupWithNavController(bottomNavigation, navController)
     }
 
     override fun onSupportNavigateUp(): Boolean {
