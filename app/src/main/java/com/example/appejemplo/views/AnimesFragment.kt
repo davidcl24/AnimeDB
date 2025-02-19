@@ -38,6 +38,16 @@ class AnimesFragment : Fragment(), AnimeOnClickDetail {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
+        binding.btnSearch.setOnClickListener {
+            viewModel.searchAnimeByName(binding.editTextSearch.text.toString())
+        }
+        binding.editTextSearch.setOnKeyListener(View.OnKeyListener { v, keyCode, event ->
+            if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_UP) {
+                viewModel.searchAnimeByName(binding.editTextSearch.text.toString())
+                return@OnKeyListener true
+            }
+            false
+        })
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -49,17 +59,6 @@ class AnimesFragment : Fragment(), AnimeOnClickDetail {
             layoutManager = mLayoutManager
             adapter = mAdapter
         }
-
-        binding.btnSearch.setOnClickListener {
-            viewModel.searchAnimeByName(binding.editTextSearch.text.toString())
-        }
-        binding.editTextSearch.setOnKeyListener(View.OnKeyListener { v, keyCode, event ->
-            if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_UP) {
-                viewModel.searchAnimeByName(binding.editTextSearch.text.toString())
-                return@OnKeyListener true
-            }
-            false
-        })
 
         viewModel.state.observe(viewLifecycleOwner) {state ->
             binding.progressBar.visibility = if (state.loading) View.VISIBLE else View.GONE

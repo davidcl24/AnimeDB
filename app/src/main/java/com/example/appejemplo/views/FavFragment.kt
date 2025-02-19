@@ -54,6 +54,11 @@ class FavFragment : Fragment(), AnimeOnClickDetail {
             layoutManager = mLayoutManager
             adapter = mAdapter
         }
+
+        viewModel.state.observe(viewLifecycleOwner) {state ->
+            mAdapter.listAnimes = state.list
+            mAdapter.notifyDataSetChanged()
+        }
     }
 
     fun deleteContact(position: Int) {

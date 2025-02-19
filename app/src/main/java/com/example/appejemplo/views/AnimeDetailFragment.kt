@@ -2,24 +2,28 @@ package com.example.appejemplo.views
 
 import android.net.Uri
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.addCallback
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.example.appejemplo.App
 import com.example.appejemplo.R
 import com.example.appejemplo.databinding.FragmentAnimeDetailBinding
 import com.example.appejemplo.viewmodels.AnimeDetailViewModel
+import com.example.appejemplo.viewmodels.AnimeDetailViewModelFactory
 
 
 class AnimeDetailFragment : Fragment() {
     private lateinit var binding: FragmentAnimeDetailBinding
-    private val viewModel: AnimeDetailViewModel by viewModels()
+    private val viewModel: AnimeDetailViewModel by viewModels{
+        AnimeDetailViewModelFactory(App.db.animeDao())
+    }
     private val args: AnimeDetailFragmentArgs by navArgs()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,6 +47,7 @@ class AnimeDetailFragment : Fragment() {
             viewModel.fetchAnimeById(identif)
         }
 
+        onClickAddHandle()
         onClickBackHandle()
         viewModel.state.observe(viewLifecycleOwner) {state ->
             binding.textViewTitle.text = state.anime?.title ?: "Anime no encontrado"
@@ -56,6 +61,12 @@ class AnimeDetailFragment : Fragment() {
                 .error(R.drawable.gato)
                 .centerCrop()
                 .into(binding.imageCover)
+        }
+    }
+
+    private fun onClickAddHandle() {
+        binding.btnAddToFav.setOnClickListener {
+            viewModel.addAnimeToFav()
         }
     }
 
