@@ -6,7 +6,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.addCallback
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -41,6 +43,7 @@ class AnimeDetailFragment : Fragment() {
             viewModel.fetchAnimeById(identif)
         }
 
+        onClickBackHandle()
         viewModel.state.observe(viewLifecycleOwner) {state ->
             binding.textViewTitle.text = state.anime?.title ?: "Anime no encontrado"
             binding.textViewSynopsis.text = state.anime?.synopsis ?: ""
@@ -53,6 +56,12 @@ class AnimeDetailFragment : Fragment() {
                 .error(R.drawable.gato)
                 .centerCrop()
                 .into(binding.imageCover)
+        }
+    }
+
+    private fun onClickBackHandle() {
+        requireActivity().onBackPressedDispatcher.addCallback {
+            findNavController().navigateUp()
         }
     }
 }

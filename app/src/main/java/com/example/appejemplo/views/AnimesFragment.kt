@@ -2,6 +2,7 @@ package com.example.appejemplo.views
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -52,6 +53,13 @@ class AnimesFragment : Fragment(), AnimeOnClickDetail {
         binding.btnSearch.setOnClickListener {
             viewModel.searchAnimeByName(binding.editTextSearch.text.toString())
         }
+        binding.editTextSearch.setOnKeyListener(View.OnKeyListener { v, keyCode, event ->
+            if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_UP) {
+                viewModel.searchAnimeByName(binding.editTextSearch.text.toString())
+                return@OnKeyListener true
+            }
+            false
+        })
 
         viewModel.state.observe(viewLifecycleOwner) {state ->
             binding.progressBar.visibility = if (state.loading) View.VISIBLE else View.GONE
