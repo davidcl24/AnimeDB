@@ -9,5 +9,14 @@
         android:id="@+id/animesFragment"
         android:name="com.example.appejemplo.views.AnimesFragment"
         android:label="fragment_animes"
-        tools:layout="@layout/fragment_animes" />
+        tools:layout="@layout/fragment_animes" >
+        <action
+            android:id="@+id/action_animesFragment_to_animeDetailFragment"
+            app:destination="@id/animeDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/animeDetailFragment"
+        android:name="com.example.appejemplo.views.AnimeDetailFragment"
+        android:label="fragment_anime_detail"
+        tools:layout="@layout/fragment_anime_detail" />
 </navigation>

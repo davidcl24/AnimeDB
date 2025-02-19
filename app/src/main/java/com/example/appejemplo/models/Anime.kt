@@ -8,6 +8,7 @@ data class Anime(
     @SerializedName("score") val score: Double,
     @SerializedName("rating") val rating: String,
     @SerializedName("genres") val genres: List<Genre>,
+    @SerializedName("synopsis") val synopsis: String,
     @SerializedName("images") private val images: Map<String, Map<String, String>>
 ) {
     val imageUri: String get() = images["jpg"]?.get("image_url") ?: ""
