@@ -21,7 +21,7 @@ class AnimeDetailViewModel : ViewModel() {
             try {
                 val response = animesService.getAnimeById(id)
                 _state.value = _state.value?.copy(
-                    anime = response.animes[0],
+                    anime = response.anime,
                     loading = false,
                     error = null
                 )

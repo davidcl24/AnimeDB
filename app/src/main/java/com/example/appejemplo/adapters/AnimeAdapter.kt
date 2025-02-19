@@ -27,6 +27,7 @@ class AnimeAdapter (var listAnimes: List<Anime>,
     override fun onBindViewHolder(holder: AnimeAdapter.ViewHolder, position: Int) {
         val item = listAnimes[position]
         holder.bind(item)
+        holder.setListener(item)
     }
 
     override fun getItemCount(): Int {
