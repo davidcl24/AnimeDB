@@ -16,7 +16,7 @@ class AnimeDetailViewModel : ViewModel() {
         _state.value = UiState(loading = true)
     }
 
-    private fun fetchAnimeById(id: Int) {
+    fun fetchAnimeById(id: Int) {
         viewModelScope.launch {
             try {
                 val response = animesService.getAnimeById(id)

@@ -18,5 +18,10 @@
         android:id="@+id/animeDetailFragment"
         android:name="com.example.appejemplo.views.AnimeDetailFragment"
         android:label="fragment_anime_detail"
-        tools:layout="@layout/fragment_anime_detail" />
+        tools:layout="@layout/fragment_anime_detail" >
+        <argument
+            android:name="mal_id"
+            app:argType="integer"
+            android:defaultValue="-1" />
+    </fragment>
 </navigation>

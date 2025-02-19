@@ -14,7 +14,8 @@ import com.example.appejemplo.databinding.ItemAnimeBinding
 import com.example.appejemplo.models.Anime
 import com.example.appejemplo.models.Animes
 
-class AnimeAdapter (var listAnimes: List<Anime>) : RecyclerView.Adapter<AnimeAdapter.ViewHolder>(){
+class AnimeAdapter (var listAnimes: List<Anime>,
+    var listener: AnimeOnClickDetail) : RecyclerView.Adapter<AnimeAdapter.ViewHolder>(){
     private lateinit var mContext: Context
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AnimeAdapter.ViewHolder {
@@ -46,6 +47,10 @@ class AnimeAdapter (var listAnimes: List<Anime>) : RecyclerView.Adapter<AnimeAda
                 .error(R.drawable.gato)
                 .centerCrop()
                 .into(binding.imageBackGround)
+        }
+
+        fun setListener(anime: Anime) {
+            binding.root.setOnClickListener { listener.onClickAnime(anime.id) }
         }
     }
 

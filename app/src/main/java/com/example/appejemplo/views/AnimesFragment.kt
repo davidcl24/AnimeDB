@@ -7,13 +7,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.appejemplo.adapters.AnimeAdapter
+import com.example.appejemplo.adapters.AnimeOnClickDetail
 import com.example.appejemplo.databinding.FragmentAnimesBinding
 import com.example.appejemplo.viewmodels.AnimeViewModel
 
 
-class AnimesFragment : Fragment() {
+class AnimesFragment : Fragment(), AnimeOnClickDetail {
     private lateinit var binding: FragmentAnimesBinding
     private lateinit var mAdapter: AnimeAdapter
     private lateinit var mLayoutManager: GridLayoutManager
@@ -39,7 +41,7 @@ class AnimesFragment : Fragment() {
 
     @SuppressLint("NotifyDataSetChanged")
     private fun setupRecyclerView() {
-        mAdapter = AnimeAdapter(mutableListOf())
+        mAdapter = AnimeAdapter(mutableListOf(), this)
         mLayoutManager = GridLayoutManager(requireContext(), 2)
 
         binding.recyclerView.apply {
@@ -57,5 +59,10 @@ class AnimesFragment : Fragment() {
             mAdapter.notifyDataSetChanged()
         }
 
+    }
+
+    override fun onClickAnime(id: Int) {
+        val action = AnimesFragmentDirections.actionAnimesFragmentToAnimeDetailFragment(id)
+        findNavController().navigate(action)
     }
 }
