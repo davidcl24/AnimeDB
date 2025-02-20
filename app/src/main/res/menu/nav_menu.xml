@@ -9,4 +9,9 @@
         android:icon="@drawable/baseline_favorite_24"
         android:id="@+id/favFragment"
         android:title="Favoritos" />
+
+    <item
+        android:icon="@drawable/baseline_person_24"
+        android:id="@+id/userFragment"
+        android:title="Usuario" />
 </menu>

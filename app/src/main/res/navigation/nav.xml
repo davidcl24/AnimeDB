@@ -33,4 +33,8 @@
             android:id="@+id/action_favFragment_to_animeDetailFragment"
             app:destination="@id/animeDetailFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/userFragment"
+        android:name="com.example.appejemplo.views.UserFragment"
+        android:label="UserFragment" />
 </navigation>
