@@ -10,9 +10,13 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.appejemplo.App
 import com.example.appejemplo.adapters.AnimeAdapter
+import com.example.appejemplo.adapters.AnimeFavAdapter
 import com.example.appejemplo.adapters.AnimeOnClickDetail
+import com.example.appejemplo.adapters.SwipeToDelete
 import com.example.appejemplo.databinding.FragmentFavBinding
 import com.example.appejemplo.viewmodels.FavViewModel
 import com.example.appejemplo.viewmodels.FavViewModelFactory
@@ -20,8 +24,8 @@ import com.example.appejemplo.viewmodels.FavViewModelFactory
 
 class FavFragment : Fragment(), AnimeOnClickDetail {
     private lateinit var binding: FragmentFavBinding
-    private lateinit var mAdapter: AnimeAdapter
-    private lateinit var mLayoutManager: GridLayoutManager
+    private lateinit var mAdapter: AnimeFavAdapter
+    private lateinit var mLayoutManager: LinearLayoutManager
 
     private val viewModel: FavViewModel by viewModels {
         FavViewModelFactory(App.db.animeDao())
@@ -48,21 +52,26 @@ class FavFragment : Fragment(), AnimeOnClickDetail {
 
     @SuppressLint("NotifyDataSetChanged")
     private fun setupRecyclerView() {
-        mAdapter = AnimeAdapter(mutableListOf(), this)
-        mLayoutManager = GridLayoutManager(requireContext(), 2)
+        mAdapter = AnimeFavAdapter(mutableListOf(), this)
+        mLayoutManager = LinearLayoutManager(requireContext())
         binding.recyclerView.apply {
             layoutManager = mLayoutManager
             adapter = mAdapter
         }
 
         viewModel.state.observe(viewLifecycleOwner) {state ->
-            mAdapter.listAnimes = state.list
+            mAdapter.listAnimes = state.list.toMutableList()
             mAdapter.notifyDataSetChanged()
         }
+
+        val itemTouchHelper = ItemTouchHelper(SwipeToDelete(this))
+        itemTouchHelper.attachToRecyclerView(binding.recyclerView)
     }
 
-    fun deleteContact(position: Int) {
-        TODO("Not yet implemented")
+    fun deleteFavAnime(position: Int) {
+        val item = mAdapter.listAnimes[position]
+        mAdapter.delete(position)
+        viewModel.deleteFav(item)
     }
 
     override fun onClickAnime(id: Int) {

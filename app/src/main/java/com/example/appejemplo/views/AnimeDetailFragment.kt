@@ -50,7 +50,7 @@ class AnimeDetailFragment : Fragment() {
         onClickAddHandle()
         onClickBackHandle()
         viewModel.state.observe(viewLifecycleOwner) {state ->
-            binding.textViewTitle.text = state.anime?.title ?: "Anime no encontrado"
+            binding.textViewName.text = state.anime?.title ?: "Anime no encontrado"
             binding.textViewSynopsis.text = state.anime?.synopsis ?: ""
             binding.textScoreNumeric.text = state.anime?.score.toString()
 

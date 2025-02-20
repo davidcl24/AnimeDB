@@ -15,7 +15,8 @@ class SwipeToDelete(private val fragment: FavFragment): ItemTouchHelper.SimpleCa
     }
 
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-        TODO("Not yet implemented")
+        val position = viewHolder.adapterPosition
+        fragment.deleteFavAnime(position)
     }
 
 
